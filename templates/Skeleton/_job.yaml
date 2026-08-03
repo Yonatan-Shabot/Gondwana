@@ -1,0 +1,22 @@
+{{- define "universal.skeleton.job" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{ $root := .root }} {{- /* Should be $
+.content - A list of files to be inserted
+.files - This is a list of globalFiles that should be inserted into the deployment
+*/}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .context.name }}
+  labels:
+    microservice/name: {{ .content.name | quote }}
+    {{- include "universal.labels" $root | indent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        parent: {{ .content.name }}
+    spec:
+      {{- include "universal.skeleton.pod" . | indent 6 }}
+---
+{{- end }}

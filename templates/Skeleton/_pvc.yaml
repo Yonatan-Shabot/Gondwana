@@ -1,0 +1,25 @@
+{{- define "universal.skeleton.pvc" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{ $root := .root }} {{- /* Should be $
+.context - This is the context of the pvc object
+*/}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .context.name }}
+  labels:
+    {{- include "universal.labels" $root | indent 4 }}
+spec:
+  accessMode: 
+    - {{ .context.accessMode }}
+  {{- if .context.pvBind}}
+  volumeName: {{ .context.pvBind }}
+  {{- end }}
+  {{- if (hasKey .context "storageClass") }}
+  storageClassName: '{{ .context.storageClass }}'
+  {{- end }}
+  resources:
+    requests:
+      size: {{ .context.size }}
+---
+{{- end }}

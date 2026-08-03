@@ -1,0 +1,15 @@
+{{- define "universal.skeleton.configMap" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{ $root := .root }} {{- /* Should be $
+.name - the name of the service this manifest is a part of
+.content - A list of files to be inserted
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "universal.labels" $root | indent 4 }}
+data:
+{{ toYaml .content | indent 2}}
+{{- end }}

@@ -1,0 +1,24 @@
+{{- define "universal.skeleton.service" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{ $root := .root }} {{- /* Should be $
+.parentName - the name of the service this manifest is a part of
+.ports - A list of ports to be exposed In-Cluster
+*/}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .parentName }}
+  labels:
+    microservice/name: {{ .parentName | quote }}
+    {{- include "universal.labels" $root | indent 4 }}
+spec:
+  selector:
+    app: {{ .parentName }}
+  ports:
+  {{- range .ports }}
+    - name: {{ .name | default .port}}
+      port: {{ .port }}
+      protocol: {{.protocol | default "TCP" }}
+  {{- end }}
+---
+{{- end }}

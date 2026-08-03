@@ -1,0 +1,6 @@
+{{- range $context := .Values.services.generic }}
+{{- $files := include "universal.files.getList" (dict "files" $context.files "filesFrom" $context.filesFrom "name" $context.name "root" $) | fromYamlArray }}
+
+{{- include "universal.skeleton.deployment" (dict "context" $context "ports" $context.ports "volumes" $context.pvc "files" $files "env" $context.env "root" $) }}
+---
+{{- end }}

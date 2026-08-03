@@ -1,0 +1,14 @@
+{{- range $values := .Values.services.jobs }} {{- /* Iterate over all the job services */}}
+{{- $serviceName := $values.name }}
+{{- range $fileConfig := $values.files }} {{- /* Iterate over all the files per service */}}
+{{- /* from the dirs and files generate all the necessary files into a list object and then send it to the template */}}
+{{- $content := include "universal.files.createDict" (dict "root" $ "dir" $fileConfig.dir "file" $fileConfig.file) | fromYaml }}
+
+{{- $parsedFile := ($fileConfig.file | default "" | replace "." "-" | replace "/" "-")}} {{- /* replaces / and . with -  */}}
+{{- $parsedDir := (regexReplaceAll "^-" (printf "%s-" ($fileConfig.dir | default "") | replace "/" "-") "") }} {{- /* replaces / with - and adds a - to the end if not empty */}}
+{{- $configFileName := (printf "%s-%s%s" $serviceName $parsedDir $parsedFile | trimSuffix "-")}}
+
+{{- include "universal.skeleton.configMap" (dict "name" $configFileName "content" $content "root" $) }}
+---
+{{- end }}
+{{- end }}

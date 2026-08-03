@@ -1,0 +1,94 @@
+{{- define "universal.skeleton.pod" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{- $root := .root }} {{- /* Should be $
+.context - the context of the service this manifest is a part of
+.ports - A list of ports to be exoposed
+.files - A list of files to be mounted in the pod
+.envs - A list of envs that should be inserted into each pod
+.volumes - A lsit of volumes to be mounted in each pod
+*/}}
+{{- $podName := .context.name }} {{- /* The name of the service this manifest is a part of */}}
+imagePullSecrets:
+  - name: pull-secret
+serviceAccountName: {{ $podName }}
+containers:
+  - name: {{ $podName }}
+    image: {{ include "universal.service.image" (dict "serviceName" $podName "image" .context.image "root" $root) }}
+    {{- if .context.entrypoint }}
+    command:
+    {{- range (splitList " " .context.entrypoint) }}
+      - {{ . }}
+    {{- end }}
+    {{- end }}
+    {{- if .context.args }}
+    args:
+    {{- range (splitList " " .context.args) }}
+      - {{ . }}
+    {{- end }}
+    {{- end }}
+    {{- if .ports }}
+    ports:
+    {{- range .ports }}
+      - name: {{ .name }}
+        containerPort: {{ .port }}
+        protocol: {{ .protocol | default "TCP"}}
+    {{- end }}
+    {{- end }}
+    {{- if .env }}
+    env:
+    {{- range $key, $value := .env }}
+      - name: {{ $key }}
+        value: {{ $value }}
+    {{- end }}
+    {{- end }}
+    {{- if .context.envFrom }}
+    envFrom:
+    {{- range $envName := .envFrom }}
+    {{- with index $root.Values.commons.globalEnv $envName }}
+    {{- if .secret }}
+      - secretRef:
+          name: {{ $envName }}
+    {{- else }}
+      - configMapRef:
+          name: {{ $envName }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- if or .files .volumes }}
+    volumeMounts:
+      {{- range $values := .files }} {{- /* Iterate over all the different file objects */}}
+      {{- range $fileName := $values.paths }} {{- /* Iterate over each individual file in the object */}}
+      - name: {{ $values.name }}-{{ $podName }}
+        mountPath: {{ $values.mountDir }}/{{ $fileName}}
+        subPath: {{ $fileName }}
+      {{- end }}
+      {{- end }}
+
+      {{- range .volumes }}
+      - name: {{ .name }}-{{ $podName }}
+        mountPath: {{ .mountPath }}
+      {{- end }}
+    {{- end }}
+    {{- $resources := mergeOverwrite (deepCopy $root.Values.commons.resources) .context.resources }}
+    resources:
+    {{- toYaml $resources | nindent 6 }}
+{{- if or .files .volumes }}
+volumes:
+  {{- range  $values := .files }}
+  - name: {{ $values.name }}-{{ $podName }}
+    {{- if eq $values.secret true }}
+    secret:
+      secretName: {{ $values.name }}
+    {{- else }}
+    configMap:
+      name: {{ $values.name }}
+    {{- end }}
+  {{- end }}
+  {{- range .volumes }}
+  - name: {{ .name }}-{{ $podName }}  
+    persistentVolumeClaim:
+      claimName: {{ .name }}
+  {{- end }}
+{{- end }}
+{{- end }}

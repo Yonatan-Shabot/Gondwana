@@ -1,0 +1,25 @@
+{{- range $values := .Values.commons.rbac }}
+{{- $roleName := .name }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $roleName }}
+  labels:
+    {{- template "universal.labels" $}}
+rules:
+{{ toYaml .rules | indent 2 }}
+---
+{{- range .bindTo }}
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ $roleName }}-{{ . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $roleName }}
+{{- end }}
+{{- end }}

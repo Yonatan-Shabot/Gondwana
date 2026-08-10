@@ -32,8 +32,8 @@ appVersion: "1.0.0"
 
 dependencies:
   - name: gondwana
-    version: 1.0.0 # Replace with the latest version
-    repository: "[https://your-repo-url.com/charts](https://your-repo-url.com/charts)" # Replace with your actual chart repository
+    version: 0.1.0
+    repository: # Wait a minute, this isn't even released yet!
 ```
 3. Update your chart dependencies to download Gondwana:
 

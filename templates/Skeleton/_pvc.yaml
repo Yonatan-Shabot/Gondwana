@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.pvc" }}
+{{- define "gondwana.skeleton.pvc" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .context - This is the context of the pvc object
@@ -8,7 +8,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .context.name }}
   labels:
-    {{- include "universal.labels" $root | indent 4 }}
+    {{- include "gondwana.labels" $root | indent 4 }}
 spec:
   accessMode: 
     - {{ .context.accessMode }}

@@ -1,4 +1,0 @@
-{{- range $context := .Values.services.generic }}
-{{- include "universal.skeleton.service" (dict "parentName" $context.name "ports" $context.ports "root" $) }}
----
-{{- end }}

@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.networkPolicy" }}
+{{- define "gondwana.skeleton.networkPolicy" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .parentName - the name of the service this manifest is a part of
@@ -10,7 +10,7 @@ metadata:
   name: allow-{{ .parentName }}-{{ .exposedPort.targetPort }}
   labels:
     microservice/name: {{ .parentName | quote }}
-    {{- include "universal.labels" $root | indent 4 }}
+    {{- include "gondwana.labels" $root | indent 4 }}
 spec:
   podSelector:
     matchLabels:

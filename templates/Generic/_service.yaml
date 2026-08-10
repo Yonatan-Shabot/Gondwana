@@ -1,0 +1,6 @@
+{{- define "gondwana.generic.service" }}
+{{- range $context := .Values.services.generic }}
+{{- include "gondwana.skeleton.service" (dict "parentName" $context.name "ports" $context.ports "root" $) }}
+---
+{{- end }}
+{{- end }}

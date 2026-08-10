@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.deployment" }}
+{{- define "gondwana.skeleton.deployment" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .content - A list of files to be inserted
@@ -10,7 +10,7 @@ metadata:
   name: {{ .context.name }}
   labels:
     microservice/name: {{ .context.name | quote }}
-    {{- include "universal.labels" $root | indent 4 }}
+    {{- include "gondwana.labels" $root | indent 4 }}
 spec:
   replicas: {{ .context.replicaCount | default 1}}
   selector:
@@ -21,6 +21,6 @@ spec:
       labels:
         app: {{ .context.name }}
     spec:
-      {{- include "universal.skeleton.pod" . | indent 6 }}
+      {{- include "gondwana.skeleton.pod" . | indent 6 }}
 ---
 {{- end }}

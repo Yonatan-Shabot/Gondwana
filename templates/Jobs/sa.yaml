@@ -1,4 +1,0 @@
-{{- range $context := .Values.services.jobs }}
-{{- include "universal.skeleton.sa" (dict "serviceAccount" $context.name "root" $) }}
----
-{{- end }}

@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.cronJob" }}
+{{- define "gondwana.skeleton.cronJob" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .content - A list of files to be inserted
@@ -10,7 +10,7 @@ metadata:
   name: {{ .context.name }}
   labels:
     microservice/name: {{ .content.name | quote }}
-    {{- include "universal.labels" $root | indent 4 }}
+    {{- include "gondwana.labels" $root | indent 4 }}
 spec:
   schedule: {{ .content.cron | quote }}
   jobTemplate:
@@ -20,6 +20,6 @@ spec:
           labels:
             parent: {{ .content.name }}
         spec:
-          {{- include "universal.skeleton.pod" . | indent 10 }}
+          {{- include "gondwana.skeleton.pod" . | indent 10 }}
 ---
 {{- end }}

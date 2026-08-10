@@ -1,8 +1,0 @@
-{{- range $values := .Values.services.generic }}
-{{- range $port := $values.ports }}
-{{- if $port.ingress }}
-{{- include "universal.skeleton.ingress" (dict "parentName" $values.name "exposedPort" $port "root" $) }}
----
-{{- end }}
-{{- end }}
-{{- end }}

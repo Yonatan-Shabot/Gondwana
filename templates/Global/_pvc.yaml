@@ -1,0 +1,6 @@
+{{- define "gondwana.global.pvc" }}
+{{- range $context := .Values.commons.pvcs }}
+{{- include "gondwana.skeleton.pvc" (dict "context" $context "root" $) }}
+---
+{{- end }}
+{{- end }}

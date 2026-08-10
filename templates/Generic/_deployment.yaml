@@ -1,0 +1,8 @@
+{{- define "gondwana.generic.deployment" }}
+{{- range $context := .Values.services.generic }}
+{{- $files := include "gondwana.files.getList" (dict "files" $context.files "filesFrom" $context.filesFrom "name" $context.name "root" $) | fromYamlArray }}
+
+{{- include "gondwana.skeleton.deployment" (dict "context" $context "ports" $context.ports "volumes" $context.pvc "files" $files "env" $context.env "root" $) }}
+---
+{{- end }}
+{{- end }}

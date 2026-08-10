@@ -1,10 +1,10 @@
-{{- define "universal.labels" }}
+{{- define "gondwana.labels" }}
 {{- /* Expects $ as the only argument */}}
 app.kubernetes.io/part-of: {{ .Release.Name }}
 generator: "helm"
 {{- end }}
 
-{{- define "universal.files.getList" }}
+{{- define "gondwana.files.getList" }}
 {{- $root := .root }} {{- /* Should always be $ */}}
 {{- $serviceName := .name }}
 {{- range $fileToMount := .filesFrom }}
@@ -41,19 +41,19 @@ generator: "helm"
 {{- end }}
 {{- end }}
 
-{{- define "universal.files.createDict" }}
+{{- define "gondwana.files.createDict" }}
 {{- $root := .root }} {{- /* Should be $*/}}
 {{- $file := .file }} {{- /* A single file to be added, full path from repo root */}}
 {{- $dir := .dir }} {{- /* A directory to be added in its entirety, full path from repo root */}}
 {{- if $dir }}
-{{- include "universal.files.createDict.dir" (dict "root" $root "dir" $dir)}}
+{{- include "gondwana.files.createDict.dir" (dict "root" $root "dir" $dir)}}
 {{- end }}
 {{- if $file }}
-{{- include "universal.files.createDict.file" (dict "root" $root "file" $file)}}
+{{- include "gondwana.files.createDict.file" (dict "root" $root "file" $file)}}
 {{- end }}
 {{- end }}
 
-{{- define "universal.files.createDict.dir" }}
+{{- define "gondwana.files.createDict.dir" }}
 {{- $root := .root }} {{- /* Should be $*/}}
 {{- $dir := .dir }} {{- /* A directory to be added in its entirety, full path from repo root */}}
 {{- range $path, $bytes := $root.Files.Glob (printf "%s/*" $dir) }}
@@ -62,14 +62,14 @@ generator: "helm"
 {{- end }}
 {{- end }}
 
-{{- define "universal.files.createDict.file" }}
+{{- define "gondwana.files.createDict.file" }}
 {{- $root := .root }} {{- /* Should be $*/}}
 {{- $file := .file }} {{- /* A directory to be added in its entirety, full path from repo root */}}
 {{ base $file }}: |-
 {{ $root.Files.Get $file | indent 2 }}
 {{- end }}
 
-{{- define "universal.service.image" }}
+{{- define "gondwana.service.image" }}
 {{- $root := .root }} {{- /* Should be $*/}}
 {{- $image := .image | default .serviceName }} {{- /* The image's name, if not specified will take the service's name */}}
 {{- $imageTag := index $root.Values.release $image }} {{- /* getting the image's tag from the release field */}}

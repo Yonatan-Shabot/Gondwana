@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.sa" }}
+{{- define "gondwana.skeleton.sa" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .serviceAccount - the name of the service this serviceAccount
@@ -8,5 +8,5 @@ kind: Secret
 metadata:
   name: {{ .serviceAccount }}
   labels:
-    {{- include "universal.labels" $root | indent 4 }}
+    {{- include "gondwana.labels" $root | indent 4 }}
 {{- end }}

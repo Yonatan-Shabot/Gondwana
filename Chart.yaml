@@ -1,6 +1,6 @@
 apiVersion: v3
 
-name: Gondwana
+name: gondwana
 description: A modular-generic collection of templates to deploy any application
 
 type: library

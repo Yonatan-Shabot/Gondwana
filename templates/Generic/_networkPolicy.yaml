@@ -1,0 +1,10 @@
+{{- define "gondwana.generic.networkPolicy" }}
+{{- range $values := .Values.services.generic }}
+{{- range $port := $values.ports }}
+{{- if $port.ingress }}
+{{- include "gondwana.skeleton.networkPolicy" (dict "parentName" $values.name "exposedPort" $port "root" $) }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

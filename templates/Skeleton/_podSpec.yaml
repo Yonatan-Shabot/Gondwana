@@ -1,4 +1,4 @@
-{{- define "universal.skeleton.pod" }}
+{{- define "gondwana.skeleton.pod" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{- $root := .root }} {{- /* Should be $
 .context - the context of the service this manifest is a part of
@@ -13,7 +13,7 @@ imagePullSecrets:
 serviceAccountName: {{ $podName }}
 containers:
   - name: {{ $podName }}
-    image: {{ include "universal.service.image" (dict "serviceName" $podName "image" .context.image "root" $root) }}
+    image: {{ include "gondwana.service.image" (dict "serviceName" $podName "image" .context.image "root" $root) }}
     {{- if .context.entrypoint }}
     command:
     {{- range (splitList " " .context.entrypoint) }}

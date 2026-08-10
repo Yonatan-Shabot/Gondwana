@@ -1,0 +1,6 @@
+{{- define "gondwana.jobs.sa" }}
+{{- range $context := .Values.services.jobs }}
+{{- include "gondwana.skeleton.sa" (dict "serviceAccount" $context.name "root" $) }}
+---
+{{- end }}
+{{- end }}

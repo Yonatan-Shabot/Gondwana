@@ -1,9 +1,11 @@
+{{- define "gondwana.global.env" }}
 {{- range $fileConfigName, $values := .Values.commons.globalEnv }} {{- /* Iterate over all the global env */}}
 {{- /* from the dirs and files generate all the necessary files into a list object and then send it to the template */}}
 {{- if $values.secret }}
-{{- include "universal.skeleton.secret" (dict "name" $fileConfigName "content" $values.content "root" $)  }}
+{{- include "gondwana.skeleton.secret" (dict "name" $fileConfigName "content" $values.content "root" $)  }}
 {{- else }}
-{{- include "universal.skeleton.configMap" (dict "name" $fileConfigName "content" $values.content "root" $)  }}
+{{- include "gondwana.skeleton.configMap" (dict "name" $fileConfigName "content" $values.content "root" $)  }}
 {{- end }}
 ---
+{{- end }}
 {{- end }}

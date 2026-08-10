@@ -1,4 +1,0 @@
-{{- range $context := .Values.commons.pvcs }}
-{{- include "universal.skeleton.pvc" (dict "context" $context "root" $) }}
----
-{{- end }}

@@ -6,7 +6,7 @@ commons:
 
   pullSecret:
     dockerconfigjson: <b64encoded-auth>
-  
+
   resources:
     limits:
       cpu: 10m
@@ -14,18 +14,18 @@ commons:
     requests:
       cpu: 10m
       memory: 100Mi
-  
+
   rbac:
-  - name: <role-name>
-    rules:
-      - apiGroups:
-          - ''
-        verbs:
-          - <verb> # get, list, watch, etc
-        resources:
-          - <resource> # deployments, secrets, etc
-    bindTo:
-      - <service-name>
+    - name: <role-name>
+      rules:
+        - apiGroups:
+            - ""
+          verbs:
+            - <verb> # get, list, watch, etc
+          resources:
+            - <resource> # deployments, secrets, etc
+      bindTo:
+        - <service-name>
 
   # These can be nounted to any service when specified in the filesFrom field
   globalFiles:
@@ -40,13 +40,13 @@ commons:
         <key>: <value>
         <key2>: <value>
       secret: <is-secret> # True or False
-  
+
   pvcs:
     - name: <volume-claim-name>
-      size: '' # in Gi
+      size: "" # in Gi
       accessMode: <accessMode> # Read(Only/Write)(Once/Many) depends on storageClass requirements
       pvBind: <pv-name> # In case a static persistant volume is needed, one can be configured here
-      storageClass: '' # Optional
+      storageClass: "" # Optional
 
 services:
   generic: # Every config in this section except name is optional
@@ -62,14 +62,14 @@ services:
             url: <desired-application-host> # With http url paths (Such as /foo/bar) Please check that the DNS record exists
             ingressClass: <class-type> # Optional as usually clusters have a default configured
             externalCert: <key-cert-secret-ref> # When the route needs to handle https connections by itself
-      
+
       ### ENVS AND FILES
       # this mounts only to this service
-      env: 
-        <key> : <value>
+      env:
+        <key>: <value>
         <other-key>: <other-value>
       # these will mount only to this service
-      files: 
+      files:
         - dir: dir
           mountPath: <path-in-container>
           # file: <file-path> # This can also be used instead or with dir
@@ -81,12 +81,12 @@ services:
       filesFrom:
         - name: <globalFile-name>
           mountPath: <path-in-container>
-      
+
       # Use this to mount pvc s to the pod
       pvc:
         - name: <pvc-name>
           mountPath: <path-in-pod>
-      
+
       replicaCount: 1 # Optional
       entrypoint: <command-to-execute> # As you would write it in terminal
 
@@ -106,11 +106,11 @@ services:
 
       ### ENVS AND FILES
       # this mounts only to this job
-      env: 
-        <key> : <value>
+      env:
+        <key>: <value>
         <other-key>: <other-value>
       # these will mount only to this job
-      files: 
+      files:
         - dir: <directory-path>
           mountPath: <path-in-container>
           # file: <file-path> # This can also be used instead or with dir
@@ -122,12 +122,12 @@ services:
       filesFrom:
         - name: <globalFile-name>
           mountPath: <path-in-container>
-      
+
       # Use this to mount pvc s to the pod
       pvc:
         - name: <pvc-name>
           mountPath: <path-in-pod>
-      
+
       replicaCount: 1 # Optional
       entrypoint: <command-to-execute> # As you would write it in terminal
 

@@ -1,0 +1,44 @@
+name: Release Helm Chart to GHCR
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers the workflow when you push a tag like v0.1.0
+
+env:
+  REGISTRY: ghcr.io
+  # If your Chart.yaml is in a subfolder (e.g., charts/gondwana), update this path:
+  CHART_DIR: . 
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Required to push to GitHub Container Registry
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0 # Uses a stable, modern version of Helm 3
+
+      - name: Log in to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+
+      - name: Package Helm chart
+        run: |
+          # Packages the chart into a .tgz file and outputs it to a temporary directory
+          helm package ${{ env.CHART_DIR }} --destination .deploy
+
+      - name: Push Helm chart to GHCR
+        run: |
+          # OCI registries strictly require lowercase repository names
+          REPO_LOWER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          
+          # Pushes the packaged chart to the registry
+          helm push .deploy/*.tgz oci://${{ env.REGISTRY }}/$REPO_LOWER

@@ -14,3 +14,4 @@
 {{- include "gondwana.jobs.job" . }}
 {{- include "gondwana.jobs.sa" . }}
 {{- end }}
+{{- include "gondwana" $ }}

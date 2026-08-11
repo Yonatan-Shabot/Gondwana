@@ -7,7 +7,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-{{ .parentName }}-{{ .exposedPort.targetPort }}
+  name: allow-{{ .parentName }}-{{ .exposedPort.port }}
   labels:
     microservice/name: {{ .parentName | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}
@@ -18,7 +18,7 @@ spec:
   ingress:
     - ports:
         - protocol: {{ .exposedPort.protocol | default "TCP" }}
-          port: {{ .exposedPort.targetPort }}
+          port: {{ .exposedPort.port }}
   policyTypes:
     - Ingress
 ---

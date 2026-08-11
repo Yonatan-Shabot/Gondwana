@@ -12,13 +12,13 @@ kind: Job
 metadata:
   name: {{ .context.name }}
   labels:
-    microservice/name: {{ .content.name | quote }}
+    microservice/name: {{ .context.name | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}
 spec:
   template:
     metadata:
       labels:
-        parent: {{ .content.name }}
+        parent: {{ .context.name }}
     spec:
       {{- include "gondwana.skeleton.pod" . | indent 6 }}
 ---

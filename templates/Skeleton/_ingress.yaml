@@ -2,10 +2,10 @@
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .parentName - the name of the service this manifest is a part of
-.exposedPort - A list of files to be inserted
+.exposedPort - The port configuration this ingress is exposing
 */}}
-apiVersion: r/v1
-kind: networkPolicy
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: {{ .parentName }}-{{ .exposedPort.name }}
   labels:

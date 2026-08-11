@@ -4,7 +4,7 @@
 .serviceAccount - the name of the service this serviceAccount
 */}}
 apiVersion: v1
-kind: Secret
+kind: ServiceAccount
 metadata:
   name: {{ .serviceAccount }}
   labels:

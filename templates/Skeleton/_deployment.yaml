@@ -1,8 +1,11 @@
 {{- define "gondwana.skeleton.deployment" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
-.content - A list of files to be inserted
-.files - This is a list of globalFiles that should be inserted into the deployment
+.context - the context of the service this manifest is a part of
+.ports - A list of ports to be exoposed
+.files - A list of files to be mounted in the pod
+.envs - A list of envs that should be inserted into each pod
+.volumes - A lsit of volumes to be mounted in each pod
 */}}
 apiVersion: apps/v1
 kind: Deployment

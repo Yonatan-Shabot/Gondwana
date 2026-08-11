@@ -2,7 +2,7 @@
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
 .name - the name of the service this manifest is a part of
-.content - A list of files to be inserted
+.content - A list of key-value pairs to be inserted
 */}}
 apiVersion: v1
 kind: ConfigMap

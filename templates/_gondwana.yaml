@@ -1,7 +1,7 @@
 {{- define "gondwana" }}
 {{- include "gondwana.generic.deployment" . }}
 {{- include "gondwana.generic.files" . }}
-{{- include "gondwana.generic.ingress" . }}
+{{- include "gondwana.generic.expose" . }}
 {{- include "gondwana.generic.networkPolicy" . }}
 {{- include "gondwana.generic.sa" . }}
 {{- include "gondwana.generic.service" . }}
@@ -14,4 +14,3 @@
 {{- include "gondwana.jobs.job" . }}
 {{- include "gondwana.jobs.sa" . }}
 {{- end }}
-{{- include "gondwana" $ }}

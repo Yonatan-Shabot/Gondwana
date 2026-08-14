@@ -3,6 +3,8 @@ release:
 
 commons:
   imageRepo: <repo-server>/path/to/repo
+  
+  clusterType: <cluster-type> # ocp / k8s / k8s, currently affects expose options, and will add default security options for openshift clusters
 
   pullSecret:
     dockerconfigjson: <b64encoded-auth>
@@ -58,8 +60,9 @@ services:
         - name: <port-name>
           protocol: <protocol> # Usually TCP or UDP
           port: <listening-port-in-app>
-          ingress: # in case the app is exposed outside the cluster
+          expsoe: # in case the app is exposed outside the cluster, will create ingresses or routes depending on the cluster type
             url: <desired-application-host> # With http url paths (Such as /foo/bar) Please check that the DNS record exists
+            subdomain: <desired-subdomain> # subdomain only, the route will be created under the cluster domain, when using openshift
             ingressClass: <class-type> # Optional as usually clusters have a default configured
             externalCert: <key-cert-secret-ref> # When the route needs to handle https connections by itself
 

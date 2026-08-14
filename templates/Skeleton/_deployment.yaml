@@ -10,7 +10,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .context.name }}
+  name: {{ .context.name }}{{- include "gondwana.nameSuffix" $root}}
   labels:
     microservice/name: {{ .context.name | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}

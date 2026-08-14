@@ -1,3 +1,13 @@
+{{- define "gondwana.nameSuffix" }}
+{{- /* Expects $ as the only argument, this can be overridable to add preset suffix logic to any object */}}
+{{- end }}
+{{- define "gondwana.isOpenshift" }}
+{{- /* Expects $ as the only argument, this checks whether the cluster is an OpenShift cluster */}}
+{{- if (has (.Values.commons.clusterType | lower) (list "ocp", "openshift")) }}
+"true"
+{{- end }}
+{{- end }}
+
 {{- define "gondwana.labels" }}
 {{- /* Expects $ as the only argument */}}
 app.kubernetes.io/part-of: {{ .Release.Name }}

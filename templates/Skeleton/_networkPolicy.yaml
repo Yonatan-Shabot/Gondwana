@@ -7,7 +7,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-{{ .parentName }}-{{ .exposedPort.port }}
+  name: allow-{{ .parentName }}-{{ .exposedPort.port }}{{- include "gondwana.nameSuffix" $root}}
   labels:
     microservice/name: {{ .parentName | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}

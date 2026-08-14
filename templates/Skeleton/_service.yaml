@@ -7,7 +7,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .parentName }}
+  name: {{ .parentName }}{{- include "gondwana.nameSuffix" $root}}
   labels:
     microservice/name: {{ .parentName | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}

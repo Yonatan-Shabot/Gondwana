@@ -79,16 +79,16 @@ volumes:
   - name: {{ $values.name }}-{{ $podName }}
     {{- if eq $values.secret true }}
     secret:
-      secretName: {{ $values.name }}
+      secretName: {{ $values.name }}{{- include "gondwana.nameSuffix" $root}}
     {{- else }}
     configMap:
-      name: {{ $values.name }}
+      name: {{ $values.name }}{{- include "gondwana.nameSuffix" $root}}
     {{- end }}
   {{- end }}
   {{- range .volumes }}
   - name: {{ .name }}-{{ $podName }}  
     persistentVolumeClaim:
-      claimName: {{ .name }}
+      claimName: {{ .name }}{{- include "gondwana.nameSuffix" $root}}
   {{- end }}
 {{- end }}
 {{- end }}

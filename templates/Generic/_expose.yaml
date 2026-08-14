@@ -1,7 +1,10 @@
-{{- define "gondwana.generic.ingress" }}
+{{- define "gondwana.generic.expose" }}
 {{- range $values := .Values.services.generic }}
 {{- range $port := $values.ports }}
-{{- if $port.ingress }}
+{{- if $port.expose }}
+{{- if eq (include "gondwana.isOpenshift" $) "true" }}
+{{- include "gondwana.skeleton.route" (dict "parentName" $values.name "exposedPort" $port "root" $) }}
+{{- else }}
 {{- include "gondwana.skeleton.ingress" (dict "parentName" $values.name "exposedPort" $port "root" $) }}
 ---
 {{- end }}

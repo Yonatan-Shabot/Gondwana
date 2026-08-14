@@ -1,0 +1,26 @@
+{{- define "gondwana.skeleton.route" }}
+{{- /* This skeleton expects the following arguments inside the dict */}}
+{{ $root := .root }} {{- /* Should be $
+.parentName - the name of the service this manifest is a part of
+.exposedPort - The port configuration this route is exposing
+*/}}
+apiVersion: networking.k8s.io/v1
+kind: Route
+metadata:
+  name: {{ .parentName }}-{{ .exposedPort.name }}{{- include "gondwana.nameSuffix" $root}}
+  labels:
+    microservice/name: {{ .parentName | quote }}
+    {{- include "gondwana.labels" $root | indent 4 }}
+spec:
+  {{- if .exposedPort.expose.url }}
+  host: {{ .exposedPort.expose.url }} 
+  {{- else }}
+  subdomain: {{ .exposedPort.expose.subdomain | default (printf "%s-%s" .parentName .exposedPort.name) }}
+  {{- end }}
+  to:
+    kind: Service
+    name: {{ .parentName }}{{- include "gondwana.nameSuffix" $root}}
+  port:
+    targetPort: {{ .exposedPort.name }}
+---
+{{- end }}

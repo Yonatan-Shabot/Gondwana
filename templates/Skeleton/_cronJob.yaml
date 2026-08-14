@@ -1,24 +1,27 @@
 {{- define "gondwana.skeleton.cronJob" }}
 {{- /* This skeleton expects the following arguments inside the dict */}}
 {{ $root := .root }} {{- /* Should be $
-.content - A list of files to be inserted
-.files - This is a list of globalFiles that should be inserted into the deployment
+.context - The context for the cron job
+.ports - A list of ports to be exoposed
+.files - A list of files to be mounted in the pod
+.envs - A list of envs that should be inserted into each pod
+.volumes - A lsit of volumes to be mounted in each pod
 */}}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ .context.name }}
   labels:
-    microservice/name: {{ .content.name | quote }}
+    microservice/name: {{ .context.name | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}
 spec:
-  schedule: {{ .content.cron | quote }}
+  schedule: {{ .context.cron | quote }}
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
-            parent: {{ .content.name }}
+            parent: {{ .context.name }}
         spec:
           {{- include "gondwana.skeleton.pod" . | indent 10 }}
 ---

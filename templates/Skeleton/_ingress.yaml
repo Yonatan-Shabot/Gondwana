@@ -7,7 +7,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .parentName }}-{{ .exposedPort.name }}
+  name: {{ .parentName }}-{{ .exposedPort.name }}{{- include "gondwana.nameSuffix" $root}}
   labels:
     microservice/name: {{ .parentName | quote }}
     {{- include "gondwana.labels" $root | indent 4 }}

@@ -1,8 +1,0 @@
-{{- define "gondwana.global.files" }}
-{{- range $configFileName, $values := .Values.commons.globalFiles}} {{- /* Iterate over all the general files */}}
-{{- /* from the dirs and files generate all the necessary files into a list object and then send it to the template */}}
-{{- $content := include "gondwana.files.createDict" (dict "root" $ "dir" $values.dir "file" $values.file) | fromYaml }}
-{{- include "gondwana.skeleton.configMap" (dict "name" $configFileName "content" $content "root" $) }}
----
-{{- end }}
-{{- end }}

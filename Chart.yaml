@@ -1,17 +1,12 @@
 apiVersion: v2
 
 name: gondwana
-description: A modular-generic collection of templates to deploy any application
+description: A modular-generic collection of templates to deploy any application, used with mespotamia, which includes an implementation of the Gondwana framework.
 
 type: library
 version: 0.1.5
 
 kubeVersion: ">=1.24.0"
-
-keywords:
-  - modular
-  - universal
-  - production-ready
 
 sources:
   - https://github.com/Yonatan-Shabot/Gondwana.git

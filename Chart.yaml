@@ -4,7 +4,7 @@ name: gondwana
 description: A modular-generic collection of templates to deploy any application, used with mespotamia, which includes an implementation of the Gondwana framework.
 
 type: library
-version: 0.1.5
+version: 0.1.6
 
 kubeVersion: ">=1.24.0"
 

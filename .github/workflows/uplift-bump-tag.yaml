@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    container:
+      image: gembaadvantage/uplift:v2.18.1 # Uses the official Uplift Docker image
+    
+    # Grants the workflow permission to write tags back to the repository
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history so Git can accurately determine tags
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Create and Push Tag
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          # 1. Configure a temporary Git identity
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # 2. run uplift
+          uplift bump
+          uplift tag
+          
+          # 4. Push the tag up to the GitHub remote repository
+          git push origin --tags

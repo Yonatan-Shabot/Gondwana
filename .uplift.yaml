@@ -1,0 +1,7 @@
+bumps:
+  - file: Chart.yaml
+    regex: 
+      - pattern: "version: $VERSION"
+        semver: true
+        count: 1
+commitMessage: "ci: updated chart version [ci-skip]"
